@@ -21,6 +21,7 @@ const serviceId = process.env.SERVICE_ID || "x4-test-two";
 const displayName = process.env.SERVICE_NAME || "X4 Test Two";
 const themeColor = process.env.THEME_COLOR || "#059669";
 const message = process.env.SERVICE_MESSAGE || "Hello from test two";
+const featureBadge = "Feature workspace: downstream bridge active";
 const peerUrls = (process.env.PEER_URLS || "").split(",").map((value) => value.trim()).filter(Boolean);
 
 async function peerStatuses() {
@@ -61,6 +62,7 @@ function html() {
       <section>
         <h1>${displayName}</h1>
         <p>${message}</p>
+        <p><strong>${featureBadge}</strong></p>
         <button id="flow">Ask downstream service</button>
         <pre id="output">Click to call test three.</pre>
       </section>
@@ -78,8 +80,8 @@ function html() {
 createServer(async (request, response) => {
   const url = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
   if (url.pathname === "/health") return json(response, 200, { ok: true, serviceId });
-  if (url.pathname === "/api/status") return json(response, 200, { serviceId, displayName, themeColor, message, peers: peerUrls });
-  if (url.pathname === "/api/flow") return json(response, 200, { serviceId, displayName, peers: await peerStatuses() });
+  if (url.pathname === "/api/status") return json(response, 200, { serviceId, displayName, themeColor, message, featureBadge, peers: peerUrls });
+  if (url.pathname === "/api/flow") return json(response, 200, { serviceId, displayName, featureBadge, peers: await peerStatuses() });
   response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
   response.end(html());
 }).listen(port, host, () => {
