@@ -21,7 +21,7 @@ const serviceId = process.env.SERVICE_ID || "x4-test-two";
 const displayName = process.env.SERVICE_NAME || "X4 Test Two";
 const themeColor = process.env.THEME_COLOR || "#059669";
 const message = process.env.SERVICE_MESSAGE || "Hello from test two";
-const featureBadge = "Feature workspace: downstream bridge active";
+const featureBadge = "Feature workspace: downstream bridge active; X4 linked issue smoke marker for test-two via test-one #10";
 const peerUrls = (process.env.PEER_URLS || "").split(",").map((value) => value.trim()).filter(Boolean);
 
 async function peerStatuses() {
